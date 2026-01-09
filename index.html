@@ -10,129 +10,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
-
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0B3A5B">
-
 
   <link rel="stylesheet" href="./style.css" />
 </head>
 
 <body>
 
-
-  <section id="onboarding" class="onboarding" aria-hidden="false">
-    <header class="obHeader">
-      <div class="obBrand">
-        <div class="obLogo"><i class="fa-solid fa-water"></i></div>
-        <div>
-          <div class="obTitle">Si Pemban</div>
-          <div class="obSub">Portal Monitoring & Lapor Banjir • Kalimantan Barat</div>
-        </div>
-      </div>
-
-      <div class="obGov">
-        <span class="obGovChip"><i class="fa-solid fa-building-columns"></i> Layanan Warga</span>
-        <span class="obGovChip ghost"><i class="fa-solid fa-shield-halved"></i> Offline-ready</span>
-      </div>
-    </header>
-
-    <main class="obMain">
-      <div class="obCard">
-        <div class="obHero">
-          <div class="obHeroLeft">
-            <h1>Monitoring Curah Hujan → Status Risiko & Rekomendasi</h1>
-            <p>
-              Catat curah hujan per wilayah Kalbar, pilih kategori kejadian (Genangan/Banjir/Longsor),
-              lalu pantau status <b>Normal/Waspada/Siaga/Awas</b> dengan rekomendasi tindakan cepat.
-            </p>
-
-            <div class="obBadges">
-              <span class="obBadge"><i class="fa-solid fa-database"></i> localStorage</span>
-              <span class="obBadge"><i class="fa-solid fa-map-location-dot"></i> Peta (Leaflet)</span>
-              <span class="obBadge"><i class="fa-solid fa-file-export"></i> Export CSV/JSON</span>
-              <span class="obBadge"><i class="fa-solid fa-wifi"></i> OSM Online (opsional)</span>
-            </div>
-
-            <div class="obActions">
-              <button class="btn primary" id="btnGetStarted" type="button">
-                <i class="fa-solid fa-rocket"></i> Mulai
-              </button>
-              <button class="btn ghost" id="btnExploreDemo" type="button">
-                <i class="fa-solid fa-bolt"></i> Mulai dengan Data Contoh
-              </button>
-            </div>
-
-            <div class="obNote">
-              <i class="fa-solid fa-circle-info"></i>
-              Ini adalah <b>demo/proyek</b> (bukan aplikasi resmi instansi).
-            </div>
-          </div>
-
-          <div class="obHeroRight">
-            <div class="obPanel">
-              <div class="obPanelTitle">Ringkas Alur</div>
-
-              <div class="obSteps">
-                <div class="obStep">
-                  <div class="obStepIcon"><i class="fa-solid fa-cloud-rain"></i></div>
-                  <div>
-                    <div class="obStepT">Input Data</div>
-                    <div class="obStepD">Tanggal + Wilayah + Curah Hujan + Kategori.</div>
-                  </div>
-                </div>
-
-                <div class="obStep">
-                  <div class="obStepIcon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                  <div>
-                    <div class="obStepT">Status Otomatis</div>
-                    <div class="obStepD">Berdasar ambang di menu Pengaturan.</div>
-                  </div>
-                </div>
-
-                <div class="obStep">
-                  <div class="obStepIcon"><i class="fa-solid fa-hand-holding-heart"></i></div>
-                  <div>
-                    <div class="obStepT">Rekomendasi</div>
-                    <div class="obStepD">Tindakan cepat sesuai kategori & status.</div>
-                  </div>
-                </div>
-
-                <div class="obStep">
-                  <div class="obStepIcon"><i class="fa-solid fa-location-crosshairs"></i></div>
-                  <div>
-                    <div class="obStepT">GPS & Peta</div>
-                    <div class="obStepD">Titik koordinat tampil sebagai marker.</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="obSmall">
-                <div class="obSmallRow"><span class="k">Mode</span><span class="v">Front-end only</span></div>
-                <div class="obSmallRow"><span class="k">Data</span><span class="v">Tersimpan di perangkat</span></div>
-                <div class="obSmallRow"><span class="k">Deploy</span><span class="v">GitHub + Vercel</span></div>
-              </div>
-            </div>
-
-            <div class="obFooterHint">
-              <i class="fa-solid fa-lock"></i> Tidak ada akun • Tidak ada upload data ke server
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <footer class="obFooter">
-        <span>© Si Pemban • Demo Monitoring Banjir Kalbar</span>
-        <span class="sep">•</span>
-        <span>Versi Front-end</span>
-      </footer>
-    </main>
-  </section>
-
+  <!-- ✅ Hanya 1 shell aplikasi (no onboarding) -->
   <div class="app" id="appShell">
 
     <aside class="sidebar" id="sidebar">
@@ -154,11 +43,9 @@
         <a class="navItem" href="#/data" data-route="data">
           <i class="fa-solid fa-list-check"></i><span>Data & Filter</span>
         </a>
-
         <a class="navItem" href="#/map" data-route="map">
           <i class="fa-solid fa-map-location-dot"></i><span>Peta</span>
         </a>
-
         <a class="navItem" href="#/analytics" data-route="analytics">
           <i class="fa-solid fa-chart-column"></i><span>Analisis</span>
         </a>
@@ -199,7 +86,7 @@
 
       <section class="content">
 
-  
+        <!-- ===== HOME ===== -->
         <section class="page" id="page-home">
           <div class="grid2">
             <div class="card hero">
@@ -274,7 +161,7 @@
           </div>
         </section>
 
-      
+        <!-- ===== NEW ===== -->
         <section class="page" id="page-new">
           <div class="card">
             <div class="cardHead">
@@ -382,7 +269,7 @@
           </div>
         </section>
 
-      
+        <!-- ===== DATA ===== -->
         <section class="page" id="page-data">
           <div class="card">
             <div class="cardHead">
@@ -461,7 +348,7 @@
           </div>
         </section>
 
-      
+        <!-- ===== MAP ===== -->
         <section class="page" id="page-map">
           <div class="grid2">
             <div class="card">
@@ -501,7 +388,7 @@
           </div>
         </section>
 
-        
+        <!-- ===== ANALYTICS ===== -->
         <section class="page" id="page-analytics">
           <div class="grid2">
             <div class="card">
@@ -548,7 +435,7 @@
           </div>
         </section>
 
-      
+        <!-- ===== SETTINGS ===== -->
         <section class="page" id="page-settings">
           <div class="card">
             <div class="cardHead">
@@ -601,6 +488,7 @@
     </main>
   </div>
 
+  <!-- ===== MODAL IMPORT ===== -->
   <div class="modal" id="modalImport" aria-hidden="true">
     <div class="modalCard">
       <div class="modalHead">
@@ -618,6 +506,7 @@
     </div>
   </div>
 
+  <!-- ===== TOAST ===== -->
   <div class="toast" id="toast">
     <div class="toastInner">
       <div class="toastIcon" id="toastIcon"><i class="fa-solid fa-circle-info"></i></div>
@@ -629,6 +518,6 @@
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <script src="./app.js"></script>
 </body>
 </html>
