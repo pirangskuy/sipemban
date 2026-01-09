@@ -1,0 +1,17 @@
+{
+    "name": "Si Pemban — Lapor Banjir Kalbar",
+    "short_name": "Si Pemban",
+    "description": "Aplikasi sederhana offline-first untuk mencatat curah hujan (mm/hari) dan status risiko banjir di Kalimantan Barat.",
+    "start_url": "./index.html#/home",
+    "display": "standalone",
+    "background_color": "#F6F8FB",
+    "theme_color": "#0B3A5B",
+    "icons": [
+      {
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABkUlEQVR4nO2aMU7DQBCEv1iQkQm0wBqSgS8g4QqQyQHkCqgKcKpC1Q0g2YJxkQmQW8xq1m3m3o2y8m7b3b3b7kz0yQwAAAAAAAAAAAAAA4N0m9oWwqzQv9bGm0q0m3kQxwq3Qh0xw9m8x8n0r0y8gT7o2cDqQm2o6bFj7F3n3hQbRj1YkY8mEwq2nO2mK8VqBv7rB4m2m8o1oGmJm7mVd9l0m2kQmQp9DqkWmRkqgqXv0xWm8m9m0lY3c0qv0k0vQqf8Zs+o8k5dXo2jQkJ8m3t1oVg0nqf5i0l1mQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQmQkZfQGmH3r9gAAAABJRU5ErkJggg==",
+        "sizes": "64x64",
+        "type": "image/png"
+      }
+    ]
+  }
+  

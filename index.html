@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Si Pemban — Lapor Banjir Kalbar</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0B3A5B">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+   
+
+<section id="onboarding" class="onboarding" aria-hidden="false">
+    <header class="obHeader">
+      <div class="obBrand">
+        <div class="obLogo"><i class="fa-solid fa-water"></i></div>
+        <div>
+          <div class="obTitle">Si Pemban</div>
+          <div class="obSub">Portal Monitoring & Lapor Banjir • Kalimantan Barat</div>
+        </div>
+      </div>
+  
+      <div class="obGov">
+        <span class="obGovChip"><i class="fa-solid fa-building-columns"></i> Layanan Warga</span>
+        <span class="obGovChip ghost"><i class="fa-solid fa-shield-halved"></i> Offline-ready</span>
+      </div>
+    </header>
+  
+    <main class="obMain">
+      <div class="obCard">
+        <div class="obHero">
+          <div class="obHeroLeft">
+            <h1>Monitoring Curah Hujan → Status Risiko & Rekomendasi</h1>
+            <p>
+              Catat curah hujan per wilayah Kalbar, pilih kategori kejadian (Genangan/Banjir/Longsor),
+              lalu pantau status <b>Normal/Waspada/Siaga/Awas</b> dengan rekomendasi tindakan cepat.
+            </p>
+  
+            <div class="obBadges">
+              <span class="obBadge"><i class="fa-solid fa-database"></i> localStorage</span>
+              <span class="obBadge"><i class="fa-solid fa-map-location-dot"></i> Peta (Leaflet)</span>
+              <span class="obBadge"><i class="fa-solid fa-file-export"></i> Export CSV/JSON</span>
+              <span class="obBadge"><i class="fa-solid fa-wifi"></i> OSM Online (opsional)</span>
+            </div>
+  
+            <div class="obActions">
+              <button class="btn primary" id="btnGetStarted">
+                <i class="fa-solid fa-rocket"></i> Mulai
+              </button>
+              <button class="btn ghost" id="btnExploreDemo">
+                <i class="fa-solid fa-bolt"></i> Mulai dengan Data Contoh
+              </button>
+            </div>
+  
+            <div class="obNote">
+              <i class="fa-solid fa-circle-info"></i>
+              Ini adalah <b>demo/proyek</b> (bukan aplikasi resmi instansi).
+            </div>
+          </div>
+  
+          <div class="obHeroRight">
+            <div class="obPanel">
+              <div class="obPanelTitle">Ringkas Alur</div>
+  
+              <div class="obSteps">
+                <div class="obStep">
+                  <div class="obStepIcon"><i class="fa-solid fa-cloud-rain"></i></div>
+                  <div>
+                    <div class="obStepT">Input Data</div>
+                    <div class="obStepD">Tanggal + Wilayah + Curah Hujan + Kategori.</div>
+                  </div>
+                </div>
+  
+                <div class="obStep">
+                  <div class="obStepIcon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                  <div>
+                    <div class="obStepT">Status Otomatis</div>
+                    <div class="obStepD">Berdasar ambang di menu Pengaturan.</div>
+                  </div>
+                </div>
+  
+                <div class="obStep">
+                  <div class="obStepIcon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                  <div>
+                    <div class="obStepT">Rekomendasi</div>
+                    <div class="obStepD">Tindakan cepat sesuai kategori & status.</div>
+                  </div>
+                </div>
+  
+                <div class="obStep">
+                  <div class="obStepIcon"><i class="fa-solid fa-location-crosshairs"></i></div>
+                  <div>
+                    <div class="obStepT">GPS & Peta</div>
+                    <div class="obStepD">Titik koordinat tampil sebagai marker.</div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="obSmall">
+                <div class="obSmallRow"><span class="k">Mode</span><span class="v">Front-end only</span></div>
+                <div class="obSmallRow"><span class="k">Data</span><span class="v">Tersimpan di perangkat</span></div>
+                <div class="obSmallRow"><span class="k">Deploy</span><span class="v">GitHub + Vercel</span></div>
+              </div>
+            </div>
+  
+            <div class="obFooterHint">
+              <i class="fa-solid fa-lock"></i> Tidak ada akun • Tidak ada upload data ke server
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <footer class="obFooter">
+        <span>© Si Pemban • Demo Monitoring Banjir Kalbar</span>
+        <span class="sep">•</span>
+        <span>Versi Front-end</span>
+      </footer>
+    </main>
+  </section>
+
+    <main class="obMain">
+      <div class="obCard">
+        <div class="obHero">
+          <div class="obHeroLeft">
+            <h1>Monitoring Curah Hujan → Prediksi Risiko Banjir</h1>
+            <p>
+              Catat curah hujan per wilayah di Kalbar, pilih kategori kejadian (Genangan/Banjir/Longsor),
+              dan dapatkan <b>status risiko + rekomendasi tindakan</b> otomatis.
+            </p>
+
+            <div class="obBadges">
+              <span class="obBadge"><i class="fa-solid fa-wifi"></i> Tanpa Backend</span>
+              <span class="obBadge"><i class="fa-solid fa-database"></i> localStorage</span>
+              <span class="obBadge"><i class="fa-solid fa-map-location-dot"></i> Peta (Leaflet)</span>
+              <span class="obBadge"><i class="fa-solid fa-file-export"></i> Export CSV/JSON</span>
+            </div>
+
+            <div class="obActions">
+              <button class="btn primary" id="btnGetStarted">
+                <i class="fa-solid fa-rocket"></i> Mulai
+              </button>
+              <button class="btn ghost" id="btnExploreDemo">
+                <i class="fa-solid fa-bolt"></i> Mulai dengan Data Contoh
+              </button>
+            </div>
+
+            <div class="obNote">
+              <i class="fa-solid fa-circle-info"></i>
+              Aplikasi ini untuk <b>demo/proyek</b>. Bukan aplikasi resmi instansi pemerintah.
+            </div>
+          </div>
+
+          <div class="obHeroRight">
+            <div class="obPanel">
+              <div class="obPanelTitle">Apa yang bisa kamu lakukan?</div>
+
+              <div class="obSteps">
+                <div class="obStep">
+                  <div class="obStepIcon"><i class="fa-solid fa-cloud-rain"></i></div>
+                  <div>
+                    <div class="obStepT">Input Curah Hujan</div>
+                    <div class="obStepD">mm/hari + wilayah (Kab/Kota) + tanggal.</div>
+                  </div>
+                </div>
+
+                <div class="obStep">
+                  <div class="obStepIcon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                  <div>
+                    <div class="obStepT">Status Risiko Otomatis</div>
+                    <div class="obStepD">Normal / Waspada / Siaga / Awas sesuai ambang.</div>
+                  </div>
+                </div>
+
+                <div class="obStep">
+                  <div class="obStepIcon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                  <div>
+                    <div class="obStepT">Rekomendasi Tindakan</div>
+                    <div class="obStepD">Saran cepat sesuai kategori kejadian.</div>
+                  </div>
+                </div>
+
+                <div class="obStep">
+                  <div class="obStepIcon"><i class="fa-solid fa-location-crosshairs"></i></div>
+                  <div>
+                    <div class="obStepT">Titik GPS & Peta</div>
+                    <div class="obStepD">Ambil koordinat, tampilkan marker di peta.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="obSmall">
+                <div class="obSmallRow">
+                  <span class="k">Mode</span><span class="v">Front-end only</span>
+                </div>
+                <div class="obSmallRow">
+                  <span class="k">Data</span><span class="v">Disimpan di perangkat</span>
+                </div>
+                <div class="obSmallRow">
+                  <span class="k">Target</span><span class="v">GitHub + Vercel</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="obFooterHint">
+              <i class="fa-solid fa-lock"></i> Tidak ada akun • Tidak ada upload data ke server
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="obFooter">
+        <span>© Si Pemban • Demo Monitoring Banjir Kalbar</span>
+        <span class="sep">•</span>
+        <span>Versi Front-end</span>
+      </footer>
+    </main>
+  </section>
+
+  <div class="app" id="appShell">
+
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="logo"><i class="fa-solid fa-water"></i></div>
+        <div class="brandText">
+          <div class="title">Si Pemban</div>
+          <div class="subtitle">Lapor Banjir Kalbar</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="navItem" href="#/home" data-route="home">
+          <i class="fa-solid fa-gauge"></i><span>Beranda</span>
+        </a>
+        <a class="navItem" href="#/new" data-route="new">
+          <i class="fa-solid fa-circle-plus"></i><span>Tambah Data</span>
+        </a>
+        <a class="navItem" href="#/data" data-route="data">
+          <i class="fa-solid fa-list-check"></i><span>Data & Filter</span>
+        </a>
+
+        <a class="navItem" href="#/map" data-route="map">
+          <i class="fa-solid fa-map-location-dot"></i><span>Peta</span>
+        </a>
+
+        <a class="navItem" href="#/analytics" data-route="analytics">
+          <i class="fa-solid fa-chart-column"></i><span>Analisis</span>
+        </a>
+        <a class="navItem" href="#/settings" data-route="settings">
+          <i class="fa-solid fa-gear"></i><span>Pengaturan</span>
+        </a>
+      </nav>
+
+      <div class="sidebarFooter">
+        <button class="btn ghost" id="btnInstall" title="Install sebagai PWA (jika didukung)">
+          <i class="fa-solid fa-download"></i> Install
+        </button>
+        <div class="tiny muted">
+          Offline-first: data tersimpan di localStorage.
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+
+      <header class="topbar">
+        <div class="topLeft">
+          <button class="iconBtn" id="btnToggleSidebar" title="Toggle sidebar">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="crumbs" id="crumbs">Beranda</div>
+        </div>
+        <div class="topRight">
+          <div class="chip" id="chipStatus">
+            <span class="dot"></span>
+            <span id="chipText">Siap</span>
+          </div>
+          <button class="btn" id="btnSeed">
+            <i class="fa-solid fa-bolt"></i> Isi Data Contoh
+          </button>
+        </div>
+      </header>
+
+      <section class="content">
+
+       
+        <section class="page" id="page-home">
+          <div class="grid2">
+            <div class="card hero">
+              <div class="heroText">
+                <h1>Si Pemban: Monitoring Curah Hujan → Potensi Banjir</h1>
+                <p>
+                  Catat curah hujan (mm/hari) per wilayah di Kalimantan Barat,
+                  sistem akan menghitung <b>status risiko</b> berdasarkan ambang yang bisa kamu atur.
+                </p>
+                <div class="heroActions">
+                  <a class="btn primary" href="#/new"><i class="fa-solid fa-plus"></i> Tambah Data</a>
+                  <a class="btn" href="#/data"><i class="fa-solid fa-table"></i> Lihat Data</a>
+                </div>
+                <div class="note">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  Status di aplikasi ini untuk <b>demo</b> (heuristik), bukan keputusan resmi.
+                </div>
+              </div>
+
+              <div class="heroStat">
+                <div class="statBig" id="statTotal">0</div>
+                <div class="statLabel">Total Catatan</div>
+
+                <div class="statRow">
+                  <div class="pill ok"><span id="statNormal">0</span> Normal</div>
+                  <div class="pill warn"><span id="statWaspada">0</span> Waspada</div>
+                  <div class="pill alert"><span id="statSiaga">0</span> Siaga</div>
+                  <div class="pill danger"><span id="statAwas">0</span> Awas</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="cardHead">
+                <h2>Ringkasan Terbaru</h2>
+                <div class="muted">5 catatan terakhir</div>
+              </div>
+              <div class="list" id="latestList"></div>
+            </div>
+          </div>
+
+          <div class="grid3">
+            <div class="card">
+              <div class="cardHead">
+                <h2>Distribusi Risiko</h2>
+                <div class="muted">Berdasarkan status</div>
+              </div>
+              <canvas id="donutCanvas" width="600" height="240" class="canvas"></canvas>
+              <div class="tiny muted">Grafik tanpa library eksternal.</div>
+            </div>
+
+            <div class="card">
+              <div class="cardHead">
+                <h2>Hotspot (Top Hujan)</h2>
+                <div class="muted">7 catatan tertinggi</div>
+              </div>
+              <div class="list" id="hotList"></div>
+            </div>
+
+            <div class="card">
+              <div class="cardHead">
+                <h2>Quick Tools</h2>
+                <div class="muted">Export / Reset</div>
+              </div>
+              <div class="stack">
+                <button class="btn" id="btnExportJSON"><i class="fa-solid fa-file-export"></i> Export JSON</button>
+                <button class="btn" id="btnImportJSON"><i class="fa-solid fa-file-import"></i> Import JSON</button>
+                <button class="btn danger" id="btnResetAll"><i class="fa-solid fa-trash"></i> Reset Data</button>
+              </div>
+              <div class="tiny muted">Export/import untuk pindah device / demo.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="page-new">
+          <div class="card">
+            <div class="cardHead">
+              <h2>Tambah Data Curah Hujan</h2>
+              <div class="muted">Simpan offline (localStorage)</div>
+            </div>
+
+            <form class="form" id="formNew">
+              <div class="row2">
+                <div class="field">
+                  <label>Tanggal</label>
+                  <input type="date" id="inpDate" required />
+                  <div class="hint">Gunakan tanggal kejadian/observasi.</div>
+                </div>
+
+                <div class="field">
+                  <label>Wilayah (Kab/Kota)</label>
+                  <select id="inpRegion" required></select>
+                  <div class="hint">Contoh: Pontianak, Kubu Raya, Sambas.</div>
+                </div>
+              </div>
+
+              <div class="row2">
+                <div class="field">
+                  <label>Curah Hujan (mm/hari)</label>
+                  <input type="number" id="inpRain" min="0" step="0.1" placeholder="misal: 120" required />
+                  <div class="hint">Angka akan dipakai menghitung status.</div>
+                </div>
+
+                <div class="field">
+                  <label>Sumber Data</label>
+                  <select id="inpSource">
+                    <option value="Manual">Manual</option>
+                    <option value="BMKG (catatan)">BMKG (catatan)</option>
+                    <option value="Pos Hujan / AWS">Pos Hujan / AWS</option>
+                    <option value="Lainnya">Lainnya</option>
+                  </select>
+                  <div class="hint">Boleh isi manual untuk demo.</div>
+                </div>
+              </div>
+
+              <div class="row2">
+                <div class="field">
+                  <label>Kategori Kejadian</label>
+                  <select id="inpCategory" required>
+                    <option value="Genangan">Genangan</option>
+                    <option value="Banjir" selected>Banjir</option>
+                    <option value="Longsor">Longsor</option>
+                  </select>
+                  <div class="hint">Pilih jenis kejadian yang dilaporkan.</div>
+                </div>
+
+                <div class="field">
+                  <label>Rekomendasi Otomatis</label>
+                  <div class="statusPreview" id="recommendPreview">
+                    <span class="badge" id="badgeRec">—</span>
+                    <span class="muted" id="recText">Rekomendasi akan muncul otomatis.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row2">
+                <div class="field">
+                  <label>Koordinat (opsional)</label>
+                  <div class="rowInline">
+                    <input type="text" id="inpLat" placeholder="lat" />
+                    <input type="text" id="inpLng" placeholder="lng" />
+                    <button class="btn" type="button" id="btnGeo">
+                      <i class="fa-solid fa-location-crosshairs"></i> Ambil GPS
+                    </button>
+                  </div>
+                  <div class="hint">Jika browser izinkan, akan terisi otomatis.</div>
+                </div>
+
+                <div class="field">
+                  <label>Catatan</label>
+                  <input type="text" id="inpNote" placeholder="contoh: hujan deras 3 jam, genangan di jalan..." />
+                  <div class="hint">Opsional.</div>
+                </div>
+              </div>
+
+              <div class="row2">
+                <div class="field">
+                  <label>Hasil Status (otomatis)</label>
+                  <div class="statusPreview" id="statusPreview">
+                    <span class="badge" id="badgePreview">—</span>
+                    <span class="muted" id="previewText">Masukkan curah hujan untuk melihat status.</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label>&nbsp;</label>
+                  <div class="actions">
+                    <button class="btn primary" type="submit">
+                      <i class="fa-solid fa-floppy-disk"></i> Simpan
+                    </button>
+                    <button class="btn ghost" type="button" id="btnClearForm">
+                      <i class="fa-solid fa-eraser"></i> Bersihkan
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </section>
+
+        <!-- DATA -->
+        <section class="page" id="page-data">
+          <div class="card">
+            <div class="cardHead">
+              <h2>Data & Filter</h2>
+              <div class="muted">Cari catatan berdasarkan tanggal/wilayah/kategori/status</div>
+            </div>
+
+            <div class="filters">
+              <div class="field">
+                <label>Dari</label>
+                <input type="date" id="fFrom">
+              </div>
+              <div class="field">
+                <label>Sampai</label>
+                <input type="date" id="fTo">
+              </div>
+              <div class="field">
+                <label>Wilayah</label>
+                <select id="fRegion"></select>
+              </div>
+
+              <div class="field">
+                <label>Kategori</label>
+                <select id="fCategory">
+                  <option value="">Semua</option>
+                  <option value="Genangan">Genangan</option>
+                  <option value="Banjir">Banjir</option>
+                  <option value="Longsor">Longsor</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label>Status</label>
+                <select id="fStatus">
+                  <option value="">Semua</option>
+                  <option value="Normal">Normal</option>
+                  <option value="Waspada">Waspada</option>
+                  <option value="Siaga">Siaga</option>
+                  <option value="Awas">Awas</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label>&nbsp;</label>
+                <div class="rowInline">
+                  <button class="btn" id="btnApplyFilter"><i class="fa-solid fa-filter"></i> Terapkan</button>
+                  <button class="btn ghost" id="btnClearFilter"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="tableWrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Tanggal</th>
+                    <th>Wilayah</th>
+                    <th>Kategori</th>
+                    <th>Hujan (mm)</th>
+                    <th>Status</th>
+                    <th>Sumber</th>
+                    <th>Koordinat</th>
+                    <th>Rekomendasi</th>
+                    <th>Catatan</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="dataTbody"></tbody>
+              </table>
+            </div>
+
+            <div class="tableFooter">
+              <div class="muted" id="dataCount">0 data</div>
+              <button class="btn" id="btnExportCSV"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="page-map">
+          <div class="grid2">
+            <div class="card">
+              <div class="cardHead">
+                <h2>Peta Laporan (Leaflet Offline Demo)</h2>
+                <div class="muted">Marker dari data yang punya koordinat</div>
+              </div>
+
+              <div id="mapWrap">
+                <div id="leafletMap"></div>
+
+                <div id="mapFallback" class="mapFallback">
+                  <div class="muted">
+                    Leaflet belum tersedia (misal: offline pertama kali). Peta akan aktif saat Leaflet berhasil dimuat.
+                  </div>
+                  <div id="fallbackCanvasWrap" style="margin-top:10px;"></div>
+                </div>
+              </div>
+
+              <div class="legend">
+                <span class="lg"><b>Legenda Status:</b></span>
+                <span class="dotLg ok"></span> Normal
+                <span class="dotLg warn"></span> Waspada
+                <span class="dotLg alert"></span> Siaga
+                <span class="dotLg danger"></span> Awas
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="cardHead">
+                <h2>Daftar Titik di Peta</h2>
+                <div class="muted">Klik untuk fokus</div>
+              </div>
+              <div class="list" id="mapList"></div>
+              <div class="tiny muted">Tips: gunakan tombol “Ambil GPS” saat tambah data agar titik muncul di peta.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="page-analytics">
+          <div class="grid2">
+            <div class="card">
+              <div class="cardHead">
+                <h2>Tren Curah Hujan</h2>
+                <div class="muted">Rata-rata per tanggal (max 30 titik)</div>
+              </div>
+              <canvas id="lineCanvas" width="900" height="320" class="canvas tall"></canvas>
+              <div class="tiny muted">Jika datanya sedikit, grafik akan tetap tampil.</div>
+            </div>
+
+            <div class="card">
+              <div class="cardHead">
+                <h2>Ringkasan Statistik</h2>
+                <div class="muted">Berdasarkan filter di Data</div>
+              </div>
+
+              <div class="statsGrid">
+                <div class="statCard">
+                  <div class="muted">Rata-rata (mm)</div>
+                  <div class="statNum" id="stAvg">0</div>
+                </div>
+                <div class="statCard">
+                  <div class="muted">Maksimum (mm)</div>
+                  <div class="statNum" id="stMax">0</div>
+                </div>
+                <div class="statCard">
+                  <div class="muted">Minimum (mm)</div>
+                  <div class="statNum" id="stMin">0</div>
+                </div>
+                <div class="statCard">
+                  <div class="muted">Jumlah titik</div>
+                  <div class="statNum" id="stN">0</div>
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="muted">Interpretasi cepat</div>
+              <div class="callout" id="interpretation">
+                Tambahkan data untuk melihat interpretasi risiko.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="page-settings">
+          <div class="card">
+            <div class="cardHead">
+              <h2>Pengaturan Ambang Risiko</h2>
+              <div class="muted">Semua perhitungan berbasis mm/hari</div>
+            </div>
+
+            <div class="settingsGrid">
+              <div class="field">
+                <label>Normal &lt; (mm)</label>
+                <input type="number" id="sNormal" min="0" step="1">
+                <div class="hint">Di bawah angka ini dianggap Normal.</div>
+              </div>
+              <div class="field">
+                <label>Waspada &lt; (mm)</label>
+                <input type="number" id="sWaspada" min="0" step="1">
+                <div class="hint">Di bawah angka ini Waspada (di atas Normal).</div>
+              </div>
+              <div class="field">
+                <label>Siaga &lt; (mm)</label>
+                <input type="number" id="sSiaga" min="0" step="1">
+                <div class="hint">Di bawah angka ini Siaga (di atas Waspada).</div>
+              </div>
+              <div class="field">
+                <label>Awas ≥ (mm)</label>
+                <input type="number" id="sAwas" min="0" step="1" disabled>
+                <div class="hint">Awas otomatis = nilai Siaga ke atas.</div>
+              </div>
+
+              <div class="field">
+                <label>&nbsp;</label>
+                <div class="rowInline">
+                  <button class="btn primary" id="btnSaveSettings"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                  <button class="btn ghost" id="btnDefaultSettings"><i class="fa-solid fa-wand-magic-sparkles"></i> Default</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="muted">Info</div>
+            <div class="tiny">
+              Nama Aplikasi: <b>Si Pemban — Lapor Banjir Kalbar</b><br/>
+              Mode: <b>Front-end only</b> (offline-first). Data: <b>localStorage</b>.
+            </div>
+          </div>
+        </section>
+
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="modalImport" aria-hidden="true">
+    <div class="modalCard">
+      <div class="modalHead">
+        <div>
+          <div class="modalTitle">Import JSON</div>
+          <div class="muted tiny">Tempel JSON hasil export</div>
+        </div>
+        <button class="iconBtn" id="btnCloseImport" title="Tutup"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <textarea id="importText" class="textarea" placeholder='{"records":[...],"settings":{...}}'></textarea>
+      <div class="modalActions">
+        <button class="btn ghost" id="btnCancelImport">Batal</button>
+        <button class="btn primary" id="btnDoImport"><i class="fa-solid fa-file-import"></i> Import</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="toast" id="toast">
+    <div class="toastInner">
+      <div class="toastIcon" id="toastIcon"><i class="fa-solid fa-circle-info"></i></div>
+      <div class="toastText">
+        <div class="toastTitle" id="toastTitle">Info</div>
+        <div class="toastMsg" id="toastMsg">—</div>
+      </div>
+      <button class="iconBtn" id="toastClose" title="Tutup"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
