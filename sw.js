@@ -1,9 +1,9 @@
-const CACHE_VERSION = "v3"; // ✅ naikkan versi tiap update agar cache lama dibuang
+const CACHE_VERSION = "v4"; // 
 const CACHE_NAME = `sipemban-cache-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `sipemban-runtime-${CACHE_VERSION}`;
 const TILE_CACHE = `sipemban-tiles-${CACHE_VERSION}`;
 
-// ✅ Hanya asset lokal yang diprecache (aman untuk Vercel)
+
 const ASSETS = [
   "./",
   "./index.html",
