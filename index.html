@@ -14,15 +14,18 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
+
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0B3A5B">
+
+
   <link rel="stylesheet" href="./style.css" />
 </head>
 
 <body>
-   
 
-<section id="onboarding" class="onboarding" aria-hidden="false">
+
+  <section id="onboarding" class="onboarding" aria-hidden="false">
     <header class="obHeader">
       <div class="obBrand">
         <div class="obLogo"><i class="fa-solid fa-water"></i></div>
@@ -31,13 +34,13 @@
           <div class="obSub">Portal Monitoring & Lapor Banjir • Kalimantan Barat</div>
         </div>
       </div>
-  
+
       <div class="obGov">
         <span class="obGovChip"><i class="fa-solid fa-building-columns"></i> Layanan Warga</span>
         <span class="obGovChip ghost"><i class="fa-solid fa-shield-halved"></i> Offline-ready</span>
       </div>
     </header>
-  
+
     <main class="obMain">
       <div class="obCard">
         <div class="obHero">
@@ -47,33 +50,33 @@
               Catat curah hujan per wilayah Kalbar, pilih kategori kejadian (Genangan/Banjir/Longsor),
               lalu pantau status <b>Normal/Waspada/Siaga/Awas</b> dengan rekomendasi tindakan cepat.
             </p>
-  
+
             <div class="obBadges">
               <span class="obBadge"><i class="fa-solid fa-database"></i> localStorage</span>
               <span class="obBadge"><i class="fa-solid fa-map-location-dot"></i> Peta (Leaflet)</span>
               <span class="obBadge"><i class="fa-solid fa-file-export"></i> Export CSV/JSON</span>
               <span class="obBadge"><i class="fa-solid fa-wifi"></i> OSM Online (opsional)</span>
             </div>
-  
+
             <div class="obActions">
-              <button class="btn primary" id="btnGetStarted">
+              <button class="btn primary" id="btnGetStarted" type="button">
                 <i class="fa-solid fa-rocket"></i> Mulai
               </button>
-              <button class="btn ghost" id="btnExploreDemo">
+              <button class="btn ghost" id="btnExploreDemo" type="button">
                 <i class="fa-solid fa-bolt"></i> Mulai dengan Data Contoh
               </button>
             </div>
-  
+
             <div class="obNote">
               <i class="fa-solid fa-circle-info"></i>
               Ini adalah <b>demo/proyek</b> (bukan aplikasi resmi instansi).
             </div>
           </div>
-  
+
           <div class="obHeroRight">
             <div class="obPanel">
               <div class="obPanelTitle">Ringkas Alur</div>
-  
+
               <div class="obSteps">
                 <div class="obStep">
                   <div class="obStepIcon"><i class="fa-solid fa-cloud-rain"></i></div>
@@ -82,7 +85,7 @@
                     <div class="obStepD">Tanggal + Wilayah + Curah Hujan + Kategori.</div>
                   </div>
                 </div>
-  
+
                 <div class="obStep">
                   <div class="obStepIcon"><i class="fa-solid fa-triangle-exclamation"></i></div>
                   <div>
@@ -90,7 +93,7 @@
                     <div class="obStepD">Berdasar ambang di menu Pengaturan.</div>
                   </div>
                 </div>
-  
+
                 <div class="obStep">
                   <div class="obStepIcon"><i class="fa-solid fa-hand-holding-heart"></i></div>
                   <div>
@@ -98,7 +101,7 @@
                     <div class="obStepD">Tindakan cepat sesuai kategori & status.</div>
                   </div>
                 </div>
-  
+
                 <div class="obStep">
                   <div class="obStepIcon"><i class="fa-solid fa-location-crosshairs"></i></div>
                   <div>
@@ -107,109 +110,11 @@
                   </div>
                 </div>
               </div>
-  
+
               <div class="obSmall">
                 <div class="obSmallRow"><span class="k">Mode</span><span class="v">Front-end only</span></div>
                 <div class="obSmallRow"><span class="k">Data</span><span class="v">Tersimpan di perangkat</span></div>
                 <div class="obSmallRow"><span class="k">Deploy</span><span class="v">GitHub + Vercel</span></div>
-              </div>
-            </div>
-  
-            <div class="obFooterHint">
-              <i class="fa-solid fa-lock"></i> Tidak ada akun • Tidak ada upload data ke server
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      <footer class="obFooter">
-        <span>© Si Pemban • Demo Monitoring Banjir Kalbar</span>
-        <span class="sep">•</span>
-        <span>Versi Front-end</span>
-      </footer>
-    </main>
-  </section>
-
-    <main class="obMain">
-      <div class="obCard">
-        <div class="obHero">
-          <div class="obHeroLeft">
-            <h1>Monitoring Curah Hujan → Prediksi Risiko Banjir</h1>
-            <p>
-              Catat curah hujan per wilayah di Kalbar, pilih kategori kejadian (Genangan/Banjir/Longsor),
-              dan dapatkan <b>status risiko + rekomendasi tindakan</b> otomatis.
-            </p>
-
-            <div class="obBadges">
-              <span class="obBadge"><i class="fa-solid fa-wifi"></i> Tanpa Backend</span>
-              <span class="obBadge"><i class="fa-solid fa-database"></i> localStorage</span>
-              <span class="obBadge"><i class="fa-solid fa-map-location-dot"></i> Peta (Leaflet)</span>
-              <span class="obBadge"><i class="fa-solid fa-file-export"></i> Export CSV/JSON</span>
-            </div>
-
-            <div class="obActions">
-              <button class="btn primary" id="btnGetStarted">
-                <i class="fa-solid fa-rocket"></i> Mulai
-              </button>
-              <button class="btn ghost" id="btnExploreDemo">
-                <i class="fa-solid fa-bolt"></i> Mulai dengan Data Contoh
-              </button>
-            </div>
-
-            <div class="obNote">
-              <i class="fa-solid fa-circle-info"></i>
-              Aplikasi ini untuk <b>demo/proyek</b>. Bukan aplikasi resmi instansi pemerintah.
-            </div>
-          </div>
-
-          <div class="obHeroRight">
-            <div class="obPanel">
-              <div class="obPanelTitle">Apa yang bisa kamu lakukan?</div>
-
-              <div class="obSteps">
-                <div class="obStep">
-                  <div class="obStepIcon"><i class="fa-solid fa-cloud-rain"></i></div>
-                  <div>
-                    <div class="obStepT">Input Curah Hujan</div>
-                    <div class="obStepD">mm/hari + wilayah (Kab/Kota) + tanggal.</div>
-                  </div>
-                </div>
-
-                <div class="obStep">
-                  <div class="obStepIcon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                  <div>
-                    <div class="obStepT">Status Risiko Otomatis</div>
-                    <div class="obStepD">Normal / Waspada / Siaga / Awas sesuai ambang.</div>
-                  </div>
-                </div>
-
-                <div class="obStep">
-                  <div class="obStepIcon"><i class="fa-solid fa-hand-holding-heart"></i></div>
-                  <div>
-                    <div class="obStepT">Rekomendasi Tindakan</div>
-                    <div class="obStepD">Saran cepat sesuai kategori kejadian.</div>
-                  </div>
-                </div>
-
-                <div class="obStep">
-                  <div class="obStepIcon"><i class="fa-solid fa-location-crosshairs"></i></div>
-                  <div>
-                    <div class="obStepT">Titik GPS & Peta</div>
-                    <div class="obStepD">Ambil koordinat, tampilkan marker di peta.</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="obSmall">
-                <div class="obSmallRow">
-                  <span class="k">Mode</span><span class="v">Front-end only</span>
-                </div>
-                <div class="obSmallRow">
-                  <span class="k">Data</span><span class="v">Disimpan di perangkat</span>
-                </div>
-                <div class="obSmallRow">
-                  <span class="k">Target</span><span class="v">GitHub + Vercel</span>
-                </div>
               </div>
             </div>
 
@@ -263,7 +168,7 @@
       </nav>
 
       <div class="sidebarFooter">
-        <button class="btn ghost" id="btnInstall" title="Install sebagai PWA (jika didukung)">
+        <button class="btn ghost" id="btnInstall" title="Install sebagai PWA (jika didukung)" type="button">
           <i class="fa-solid fa-download"></i> Install
         </button>
         <div class="tiny muted">
@@ -276,7 +181,7 @@
 
       <header class="topbar">
         <div class="topLeft">
-          <button class="iconBtn" id="btnToggleSidebar" title="Toggle sidebar">
+          <button class="iconBtn" id="btnToggleSidebar" title="Toggle sidebar" type="button">
             <i class="fa-solid fa-bars"></i>
           </button>
           <div class="crumbs" id="crumbs">Beranda</div>
@@ -286,7 +191,7 @@
             <span class="dot"></span>
             <span id="chipText">Siap</span>
           </div>
-          <button class="btn" id="btnSeed">
+          <button class="btn" id="btnSeed" type="button">
             <i class="fa-solid fa-bolt"></i> Isi Data Contoh
           </button>
         </div>
@@ -294,7 +199,7 @@
 
       <section class="content">
 
-       
+  
         <section class="page" id="page-home">
           <div class="grid2">
             <div class="card hero">
@@ -360,15 +265,16 @@
                 <div class="muted">Export / Reset</div>
               </div>
               <div class="stack">
-                <button class="btn" id="btnExportJSON"><i class="fa-solid fa-file-export"></i> Export JSON</button>
-                <button class="btn" id="btnImportJSON"><i class="fa-solid fa-file-import"></i> Import JSON</button>
-                <button class="btn danger" id="btnResetAll"><i class="fa-solid fa-trash"></i> Reset Data</button>
+                <button class="btn" id="btnExportJSON" type="button"><i class="fa-solid fa-file-export"></i> Export JSON</button>
+                <button class="btn" id="btnImportJSON" type="button"><i class="fa-solid fa-file-import"></i> Import JSON</button>
+                <button class="btn danger" id="btnResetAll" type="button"><i class="fa-solid fa-trash"></i> Reset Data</button>
               </div>
               <div class="tiny muted">Export/import untuk pindah device / demo.</div>
             </div>
           </div>
         </section>
 
+      
         <section class="page" id="page-new">
           <div class="card">
             <div class="cardHead">
@@ -476,7 +382,7 @@
           </div>
         </section>
 
-        <!-- DATA -->
+      
         <section class="page" id="page-data">
           <div class="card">
             <div class="cardHead">
@@ -522,8 +428,8 @@
               <div class="field">
                 <label>&nbsp;</label>
                 <div class="rowInline">
-                  <button class="btn" id="btnApplyFilter"><i class="fa-solid fa-filter"></i> Terapkan</button>
-                  <button class="btn ghost" id="btnClearFilter"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                  <button class="btn" id="btnApplyFilter" type="button"><i class="fa-solid fa-filter"></i> Terapkan</button>
+                  <button class="btn ghost" id="btnClearFilter" type="button"><i class="fa-solid fa-rotate-left"></i> Reset</button>
                 </div>
               </div>
             </div>
@@ -550,11 +456,12 @@
 
             <div class="tableFooter">
               <div class="muted" id="dataCount">0 data</div>
-              <button class="btn" id="btnExportCSV"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+              <button class="btn" id="btnExportCSV" type="button"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
             </div>
           </div>
         </section>
 
+      
         <section class="page" id="page-map">
           <div class="grid2">
             <div class="card">
@@ -594,6 +501,7 @@
           </div>
         </section>
 
+        
         <section class="page" id="page-analytics">
           <div class="grid2">
             <div class="card">
@@ -640,6 +548,7 @@
           </div>
         </section>
 
+      
         <section class="page" id="page-settings">
           <div class="card">
             <div class="cardHead">
@@ -672,8 +581,8 @@
               <div class="field">
                 <label>&nbsp;</label>
                 <div class="rowInline">
-                  <button class="btn primary" id="btnSaveSettings"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
-                  <button class="btn ghost" id="btnDefaultSettings"><i class="fa-solid fa-wand-magic-sparkles"></i> Default</button>
+                  <button class="btn primary" id="btnSaveSettings" type="button"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                  <button class="btn ghost" id="btnDefaultSettings" type="button"><i class="fa-solid fa-wand-magic-sparkles"></i> Default</button>
                 </div>
               </div>
             </div>
@@ -699,16 +608,15 @@
           <div class="modalTitle">Import JSON</div>
           <div class="muted tiny">Tempel JSON hasil export</div>
         </div>
-        <button class="iconBtn" id="btnCloseImport" title="Tutup"><i class="fa-solid fa-xmark"></i></button>
+        <button class="iconBtn" id="btnCloseImport" title="Tutup" type="button"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <textarea id="importText" class="textarea" placeholder='{"records":[...],"settings":{...}}'></textarea>
       <div class="modalActions">
-        <button class="btn ghost" id="btnCancelImport">Batal</button>
-        <button class="btn primary" id="btnDoImport"><i class="fa-solid fa-file-import"></i> Import</button>
+        <button class="btn ghost" id="btnCancelImport" type="button">Batal</button>
+        <button class="btn primary" id="btnDoImport" type="button"><i class="fa-solid fa-file-import"></i> Import</button>
       </div>
     </div>
   </div>
-
 
   <div class="toast" id="toast">
     <div class="toastInner">
@@ -717,7 +625,7 @@
         <div class="toastTitle" id="toastTitle">Info</div>
         <div class="toastMsg" id="toastMsg">—</div>
       </div>
-      <button class="iconBtn" id="toastClose" title="Tutup"><i class="fa-solid fa-xmark"></i></button>
+      <button class="iconBtn" id="toastClose" title="Tutup" type="button"><i class="fa-solid fa-xmark"></i></button>
     </div>
   </div>
 
