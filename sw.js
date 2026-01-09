@@ -1,19 +1,16 @@
-const CACHE_VERSION = "v2";
+const CACHE_VERSION = "v3"; // ✅ naikkan versi tiap update agar cache lama dibuang
 const CACHE_NAME = `sipemban-cache-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `sipemban-runtime-${CACHE_VERSION}`;
 const TILE_CACHE = `sipemban-tiles-${CACHE_VERSION}`;
 
+// ✅ Hanya asset lokal yang diprecache (aman untuk Vercel)
 const ASSETS = [
   "./",
   "./index.html",
-  "./style.css",      
+  "./style.css",
   "./app.js",
   "./manifest.json",
-  "./sw.js",
-
-  
-  "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
-  "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  "./sw.js"
 ];
 
 self.addEventListener("install", (event) => {
@@ -29,14 +26,15 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((keys) =>
       Promise.all(
         keys.map((k) => {
-          if (![CACHE_NAME, RUNTIME_CACHE, TILE_CACHE].includes(k)) return caches.delete(k);
+          if (![CACHE_NAME, RUNTIME_CACHE, TILE_CACHE].includes(k)) {
+            return caches.delete(k);
+          }
           return Promise.resolve();
         })
       )
     ).then(() => self.clients.claim())
   );
 });
-
 
 async function cacheFirst(req, cacheName) {
   const cache = await caches.open(cacheName);
@@ -47,7 +45,6 @@ async function cacheFirst(req, cacheName) {
   if (res && res.ok) cache.put(req, res.clone());
   return res;
 }
-
 
 async function staleWhileRevalidate(req, cacheName) {
   const cache = await caches.open(cacheName);
@@ -63,38 +60,35 @@ async function staleWhileRevalidate(req, cacheName) {
   return cached || (await fetchPromise);
 }
 
-
-async function navigationFallback(req) {
+// ✅ Navigation fallback: selalu kasih index.html dari cache kalau offline
+async function navigationFallback() {
   const cache = await caches.open(CACHE_NAME);
-  const cached = await cache.match(req);
-  if (cached) return cached;
-
+  const cachedIndex = await cache.match("./index.html");
   try {
-    return await fetch(req);
+    const res = await fetch("./index.html");
+    // update cache index jika online
+    if (res && res.ok) cache.put("./index.html", res.clone());
+    return res;
   } catch {
-
-    return (await cache.match("./index.html")) || Response.error();
+    return cachedIndex || Response.error();
   }
 }
 
 self.addEventListener("fetch", (event) => {
   const req = event.request;
-
- 
   if (req.method !== "GET") return;
 
   const url = new URL(req.url);
 
-  
   const isNavigate =
     req.mode === "navigate" ||
     (req.headers.get("accept") || "").includes("text/html");
 
+ 
   if (isNavigate) {
-    event.respondWith(navigationFallback(req));
+    event.respondWith(navigationFallback());
     return;
   }
-
 
   const isOsmTile =
     url.hostname.includes("tile.openstreetmap.org") ||
@@ -110,7 +104,7 @@ self.addEventListener("fetch", (event) => {
     url.hostname.includes("unpkg.com") && url.pathname.includes("/leaflet@");
 
   if (isLeafletCdn) {
-    event.respondWith(cacheFirst(req, CACHE_NAME));
+    event.respondWith(cacheFirst(req, RUNTIME_CACHE));
     return;
   }
 
@@ -120,8 +114,6 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-
-  event.respondWith(
-    fetch(req).catch(() => caches.match(req))
-  );
+ 
+  event.respondWith(fetch(req).catch(() => caches.match(req)));
 });
