@@ -1,11 +1,11 @@
-const CACHE_VERSION = "v5"; // 
+const CACHE_VERSION = "v5";
 const CACHE_NAME = `sipemban-cache-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `sipemban-runtime-${CACHE_VERSION}`;
 const TILE_CACHE = `sipemban-tiles-${CACHE_VERSION}`;
 
 const ASSETS = [
   "./",
-  "./intro.html",   
+  "./intro.html",
   "./index.html",
   "./style.css",
   "./app.js",
@@ -38,7 +38,6 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-
 async function cacheFirst(req, cacheName) {
   const cache = await caches.open(cacheName);
   const cached = await cache.match(req);
@@ -63,11 +62,9 @@ async function staleWhileRevalidate(req, cacheName) {
   return cached || (await fetchPromise);
 }
 
-
 async function htmlFallback(path) {
   const cache = await caches.open(CACHE_NAME);
   const cached = await cache.match(path);
-
   try {
     const res = await fetch(path, { cache: "no-store" });
     if (res && res.ok) cache.put(path, res.clone());
@@ -76,7 +73,6 @@ async function htmlFallback(path) {
     return cached || Response.error();
   }
 }
-
 
 self.addEventListener("fetch", (event) => {
   const req = event.request;
@@ -88,15 +84,11 @@ self.addEventListener("fetch", (event) => {
     req.mode === "navigate" ||
     (req.headers.get("accept") || "").includes("text/html");
 
-     - "/" atau "/intro.html" → intro.html
-     - selain itu → index.html (SPA)
-     Catatan: ini mencegah SW “mengunci” semua halaman ke index.html.
-  */
   if (isNavigate && url.origin === self.location.origin) {
     const isIntro =
       url.pathname === "/" ||
-      url.pathname.endsWith("/intro.html") ||
-      url.pathname === "/intro.html";
+      url.pathname === "/intro.html" ||
+      url.pathname.endsWith("/intro.html");
 
     event.respondWith(htmlFallback(isIntro ? "./intro.html" : "./index.html"));
     return;
@@ -111,7 +103,6 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  
   const isLeafletCdn =
     url.hostname.includes("unpkg.com") && url.pathname.includes("/leaflet@");
 
@@ -120,12 +111,10 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  
   if (url.origin === self.location.origin) {
     event.respondWith(staleWhileRevalidate(req, RUNTIME_CACHE));
     return;
   }
 
- 
   event.respondWith(fetch(req).catch(() => caches.match(req)));
 });
