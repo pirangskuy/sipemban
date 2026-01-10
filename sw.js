@@ -1,11 +1,11 @@
-const CACHE_VERSION = "v4"; // 
+const CACHE_VERSION = "v5"; // 
 const CACHE_NAME = `sipemban-cache-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `sipemban-runtime-${CACHE_VERSION}`;
 const TILE_CACHE = `sipemban-tiles-${CACHE_VERSION}`;
 
-
 const ASSETS = [
   "./",
+  "./intro.html",   
   "./index.html",
   "./style.css",
   "./app.js",
@@ -23,18 +23,21 @@ self.addEventListener("install", (event) => {
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys.map((k) => {
-          if (![CACHE_NAME, RUNTIME_CACHE, TILE_CACHE].includes(k)) {
-            return caches.delete(k);
-          }
-          return Promise.resolve();
-        })
+    caches.keys()
+      .then((keys) =>
+        Promise.all(
+          keys.map((k) => {
+            if (![CACHE_NAME, RUNTIME_CACHE, TILE_CACHE].includes(k)) {
+              return caches.delete(k);
+            }
+            return Promise.resolve();
+          })
+        )
       )
-    ).then(() => self.clients.claim())
+      .then(() => self.clients.claim())
   );
 });
+
 
 async function cacheFirst(req, cacheName) {
   const cache = await caches.open(cacheName);
@@ -60,19 +63,20 @@ async function staleWhileRevalidate(req, cacheName) {
   return cached || (await fetchPromise);
 }
 
-// ✅ Navigation fallback: selalu kasih index.html dari cache kalau offline
-async function navigationFallback() {
+
+async function htmlFallback(path) {
   const cache = await caches.open(CACHE_NAME);
-  const cachedIndex = await cache.match("./index.html");
+  const cached = await cache.match(path);
+
   try {
-    const res = await fetch("./index.html");
-    // update cache index jika online
-    if (res && res.ok) cache.put("./index.html", res.clone());
+    const res = await fetch(path, { cache: "no-store" });
+    if (res && res.ok) cache.put(path, res.clone());
     return res;
   } catch {
-    return cachedIndex || Response.error();
+    return cached || Response.error();
   }
 }
+
 
 self.addEventListener("fetch", (event) => {
   const req = event.request;
@@ -84,9 +88,17 @@ self.addEventListener("fetch", (event) => {
     req.mode === "navigate" ||
     (req.headers.get("accept") || "").includes("text/html");
 
- 
-  if (isNavigate) {
-    event.respondWith(navigationFallback());
+     - "/" atau "/intro.html" → intro.html
+     - selain itu → index.html (SPA)
+     Catatan: ini mencegah SW “mengunci” semua halaman ke index.html.
+  */
+  if (isNavigate && url.origin === self.location.origin) {
+    const isIntro =
+      url.pathname === "/" ||
+      url.pathname.endsWith("/intro.html") ||
+      url.pathname === "/intro.html";
+
+    event.respondWith(htmlFallback(isIntro ? "./intro.html" : "./index.html"));
     return;
   }
 
@@ -108,7 +120,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
- 
+  
   if (url.origin === self.location.origin) {
     event.respondWith(staleWhileRevalidate(req, RUNTIME_CACHE));
     return;
